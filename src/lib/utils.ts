@@ -1,56 +1,76 @@
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
+/**
+ * Combines class names using clsx and tailwind-merge
+ */
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
-// Format bytes to human readable string
+/**
+ * Formats a date to a readable string
+ */
+export function formatDate(date: string | number | Date) {
+  const d = new Date(date);
+  return d.toLocaleDateString(undefined, { 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+/**
+ * Formats bytes to a human-readable string
+ */
 export function formatBytes(bytes: number, decimals = 2) {
   if (bytes === 0) return '0 Bytes';
-
+  
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB'];
+  
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-
+  
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-// Format date to human readable string
-export function formatDate(date: string | number | Date) {
-  return new Intl.DateTimeFormat('en-US', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-  }).format(new Date(date));
+/**
+ * Truncates a string to a specified length
+ */
+export function truncate(str: string, n: number) {
+  return (str.length > n) ? str.slice(0, n-1) + '...' : str;
 }
 
-// Truncate text with ellipsis
-export function truncateText(text: string, maxLength: number) {
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength) + '...';
-}
-
-// Get severity color
-export function getSeverityColor(severity: string) {
-  switch (severity.toLowerCase()) {
-    case 'critical':
-      return 'text-red-500 dark:text-red-400';
-    case 'high':
-      return 'text-orange-500 dark:text-orange-400';
-    case 'medium':
-      return 'text-yellow-500 dark:text-yellow-400';
-    case 'low':
-      return 'text-blue-500 dark:text-blue-400';
-    default:
-      return 'text-gray-500 dark:text-gray-400';
+/**
+ * Checks if a URL is valid
+ */
+export function isValidUrl(urlString: string) {
+  try { 
+    return Boolean(new URL(urlString)); 
+  }
+  catch(e){ 
+    return false; 
   }
 }
 
-// Generate random ID
-export function generateRandomId(length = 8) {
-  return Math.random()
-    .toString(36)
-    .substring(2, length + 2);
+/**
+ * Extracts domain from a URL
+ */
+export function extractDomain(url: string) {
+  try {
+    const parsedUrl = new URL(url);
+    return parsedUrl.hostname;
+  } catch (e) {
+    return url;
+  }
+}
+
+/**
+ * Generates a random delay between min and max values
+ */
+export function randomDelay(min = 1000, max = 3000) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
