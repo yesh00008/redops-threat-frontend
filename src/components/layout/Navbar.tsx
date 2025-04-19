@@ -1,99 +1,87 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ModeToggle } from '@/components/theme/mode-toggle';
-import { Menu, X } from 'lucide-react';
+import { FileText, Globe, Key, Menu, Shield, X } from 'lucide-react';
 
 export function Navbar() {
+  const [isOpen, setIsOpen] = React.useState(false);
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  // Navigation links with icons
+  const navLinks = [
+    { name: 'Scan', href: '/scan', icon: <Shield className="h-4 w-4 mr-2" /> },
+    { name: 'Encryption', href: '/encryption', icon: <Key className="h-4 w-4 mr-2" /> },
+    { name: 'Bounty Finder', href: '/bounty-finder', icon: <Globe className="h-4 w-4 mr-2" /> },
+    { name: 'Dashboard', href: '/dashboard', icon: <FileText className="h-4 w-4 mr-2" /> },
+  ];
 
-  const isActive = (path: string) => {
-    return location.pathname === path ? 'text-primary font-bold' : 'text-muted-foreground hover:text-primary';
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
-        {/* Logo and site name */}
-        <div className="mr-4 flex">
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="flex items-center justify-center bg-black w-6 h-6 rounded text-white font-bold text-sm">
-              R
-            </div>
-            <span className="font-bold">RedOps</span>
-          </Link>
-        </div>
+    <nav className="border-b">
+      <div className="container flex h-16 items-center px-4">
+        {/* Logo and title */}
+        <Link to="/" className="flex items-center gap-2">
+          {/* Logo: Black square with white "R" */}
+          <div className="flex h-8 w-8 items-center justify-center rounded bg-black text-white font-bold">
+            R
+          </div>
+          <span className="text-xl font-bold">RedOps</span>
+        </Link>
 
         {/* Desktop navigation */}
-        <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 mx-6">
-          <Link
-            to="/"
-            className={`text-sm font-medium transition-colors ${isActive('/')}`}
-          >
-            Home
-          </Link>
-          <Link
-            to="/scan"
-            className={`text-sm font-medium transition-colors ${isActive('/scan')}`}
-          >
-            Scan
-          </Link>
-          <Link
-            to="/encryption"
-            className={`text-sm font-medium transition-colors ${isActive('/encryption')}`}
-          >
-            Encryption
-          </Link>
-        </nav>
-
-        {/* Right-side items like auth and theme toggle */}
-        <div className="flex flex-1 items-center space-x-2 justify-end">
-          <div className="flex-none items-center space-x-4">
-            <ModeToggle />
+        <div className="hidden md:flex items-center justify-between flex-1">
+          <div className="flex gap-6 ml-10">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                to={link.href}
+                className={`flex items-center text-sm font-medium transition-colors ${isActive(link.href) ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'}`}
+              >
+                {link.icon}
+                {link.name}
+              </Link>
+            ))}
+          </div>
+          <div>
+            <a href="https://github.com/yesh00008/redops-threat-frontend" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="sm">
+                GitHub
+              </Button>
+            </a>
           </div>
         </div>
 
-        {/* Mobile menu button */}
-        <div className="md:hidden ml-2">
-          <Button variant="ghost" size="icon" onClick={toggleMenu} aria-label="Toggle Menu">
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        {/* Mobile navigation toggle */}
+        <div className="md:hidden flex-1 flex justify-end">
+          <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>
       </div>
 
       {/* Mobile navigation menu */}
       {isOpen && (
-        <div className="md:hidden">
-          <div className="space-y-1 pb-3 pt-2 px-4">
+        <div className="md:hidden border-t p-4 space-y-3">
+          {navLinks.map((link) => (
             <Link
-              to="/"
-              className={`block rounded-md px-3 py-2 text-base font-medium ${isActive('/')}`}
-              onClick={toggleMenu}
+              key={link.href}
+              to={link.href}
+              className={`flex items-center p-2 text-sm font-medium rounded-md ${isActive(link.href) ? 'bg-muted' : 'hover:bg-muted'}`}
+              onClick={() => setIsOpen(false)}
             >
-              Home
+              {link.icon}
+              {link.name}
             </Link>
-            <Link
-              to="/scan"
-              className={`block rounded-md px-3 py-2 text-base font-medium ${isActive('/scan')}`}
-              onClick={toggleMenu}
-            >
-              Scan
-            </Link>
-            <Link
-              to="/encryption"
-              className={`block rounded-md px-3 py-2 text-base font-medium ${isActive('/encryption')}`}
-              onClick={toggleMenu}
-            >
-              Encryption
-            </Link>
+          ))}
+          <div className="pt-2 mt-2 border-t">
+            <a href="https://github.com/yesh00008/redops-threat-frontend" target="_blank" rel="noopener noreferrer" className="flex items-center p-2 text-sm font-medium rounded-md hover:bg-muted">
+              <span className="mr-2 text-xs bg-muted rounded-full px-2 py-1">GitHub</span>
+              View Source
+            </a>
           </div>
         </div>
       )}
-    </header>
+    </nav>
   );
 }
