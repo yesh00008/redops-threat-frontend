@@ -22,11 +22,11 @@ export function Navbar() {
       <div className="container flex h-16 items-center px-4">
         {/* Logo and title */}
         <Link to="/" className="flex items-center gap-2">
-          {/* Logo: Black square with white "R" */}
+          {/* Logo: Black square with white "G" */}
           <div className="flex h-8 w-8 items-center justify-center rounded bg-black text-white font-bold">
-            R
+            G
           </div>
-          <span className="text-xl font-bold">RedOps</span>
+          <span className="text-xl font-bold">Giga LLM</span>
         </Link>
 
         {/* Desktop navigation */}
@@ -44,7 +44,7 @@ export function Navbar() {
             ))}
           </div>
           <div>
-            <a href="https://github.com/yesh00008/redops-threat-frontend" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/yesh00008/giga-llm" target="_blank" rel="noopener noreferrer">
               <Button variant="outline" size="sm">
                 GitHub
               </Button>
@@ -75,7 +75,7 @@ export function Navbar() {
             </Link>
           ))}
           <div className="pt-2 mt-2 border-t">
-            <a href="https://github.com/yesh00008/redops-threat-frontend" target="_blank" rel="noopener noreferrer" className="flex items-center p-2 text-sm font-medium rounded-md hover:bg-muted">
+            <a href="https://github.com/yesh00008/giga-llm" target="_blank" rel="noopener noreferrer" className="flex items-center p-2 text-sm font-medium rounded-md hover:bg-muted">
               <span className="mr-2 text-xs bg-muted rounded-full px-2 py-1">GitHub</span>
               View Source
             </a>

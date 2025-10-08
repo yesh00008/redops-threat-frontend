@@ -23,7 +23,7 @@ import { Toaster } from './components/ui/toaster';
  */
 function App() {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="redops-theme">
+    <ThemeProvider defaultTheme="system" storageKey="giga-llm-theme">
       <Router>
         <Toaster />
         <Routes>
