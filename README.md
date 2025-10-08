@@ -1,6 +1,6 @@
-# RedOps Threat Intelligence Platform
+# Giga LLM
 
-A modern cybersecurity platform for threat analysis and intelligence gathering.
+Open source contribution
 
 ## Features
 
@@ -21,8 +21,8 @@ A modern cybersecurity platform for threat analysis and intelligence gathering.
 
 ```bash
 # Clone the repository
-git clone https://github.com/yesh00008/redops-threat-frontend.git
-cd redops-threat-frontend
+git clone https://github.com/yesh00008/giga-llm.git
+cd giga-llm
 
 # Install dependencies
 npm install
